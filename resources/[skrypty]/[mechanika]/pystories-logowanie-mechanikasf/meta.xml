@@ -1,0 +1,6 @@
+<meta>
+	<!-- SERVERSIDE -->
+	<script src="s_utility.lua" type="server" />
+	<script src="s_skins.lua" type="server" />
+	<script src="s_factions.lua" type="server" />
+</meta>

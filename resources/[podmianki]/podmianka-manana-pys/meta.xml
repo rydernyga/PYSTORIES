@@ -1,0 +1,5 @@
+<meta>
+	<script src="jester.lua" type="client" /> 
+	<file src="manana.txd" /> 
+	<file src="manana.dff" /> 
+</meta>

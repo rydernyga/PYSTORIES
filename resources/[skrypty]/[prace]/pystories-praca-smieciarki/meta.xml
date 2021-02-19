@@ -1,0 +1,5 @@
+<meta>
+    <info author="Sebastian 'CrosRoad95' Jura" name="Praca Smieciarek"/>
+	<script src="s_vehicles.lua" type="server" />
+	<script src="c_job.lua" type="client" />
+</meta>

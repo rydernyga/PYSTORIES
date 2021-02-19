@@ -1,0 +1,10 @@
+<meta>
+	<!-- SERVERSIDE -->
+	<script src="s_job.lua" type="server" />
+	
+	<!-- CLIENTSIDE -->
+	<script src="c_job.lua" type="client" />
+	
+	<!-- FILESIDE -->
+	<file src="i/46.png" />
+</meta>

@@ -1,0 +1,5 @@
+<meta>
+    <script src="podmianka.lua" type="client"/>
+    <file src="aodo.dff" />
+    <file src="aodo.txd" />
+</meta>
