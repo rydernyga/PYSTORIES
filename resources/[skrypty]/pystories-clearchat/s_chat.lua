@@ -15,7 +15,7 @@ addCommandHandler("cc",
                 outputChatBox(" ")
             end
             
-            outputChatBox("** Chat został wyczyszczony przez ".. name .."#ff0000, Powód: ".. reason, root, 255, 0, 0)
+            outputChatBox("** Chat został wyczyszczony przez ".. name .."#ff0000, Powód: ".. reason, root, 255, 0, 0, true)
         end
     end
 )
