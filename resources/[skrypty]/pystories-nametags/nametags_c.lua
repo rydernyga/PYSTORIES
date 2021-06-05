@@ -39,21 +39,16 @@ end, 15000, 0)
 
 function korona()
 	local rootx, rooty, rootz = getCameraMatrix()
-	for i, player in ipairs(getElementsByType("player",root,true)) do
+	for i, player in ipairs(getElementsWithinRange(rootx,rooty,rootz,22,"player")) do
 		if getElementDimension(localPlayer)==getElementDimension(player) and getElementInterior(localPlayer)==getElementInterior(player) then
 			if getElementAlpha(player) < 1 then
 			if not getElementData(localPlayer,"player:admin") == true then return end
 			end
 			local x,y,z = getPedBonePosition(player,6)
 			if x and y and z then
-				local distance = getDistanceBetweenPoints3D(rootx, rooty, rootz, x, y, z)
-				if(distance <= 22) then
-					if isLineOfSightClear( rootx,rooty,rootz, x,y,z, true, false, false, true, false, false, true,localPlayer ) then
-						if getElementData(player,"Ryjek") then
-							if(distance <= 12) then
-								dxDrawMaterialLine3D(x,y,z+1.25,x,y,z+0.35,img,1.1,white)
-							end
-						end
+				if isLineOfSightClear( rootx,rooty,rootz, x,y,z, true, false, false, true, false, false, true,localPlayer ) then
+					if getElementData(player,"Ryjek") then
+						dxDrawMaterialLine3D(x,y,z+1.25,x,y,z+0.35,img,1.1,white)
 					end
 				end
 			end
@@ -63,46 +58,40 @@ end
 
 addEventHandler("onClientRender", root, function()
   local rootx, rooty, rootz = getCameraMatrix()--getElementPosition(getLocalPlayer())
-        for i, vehicle in ipairs(getElementsByType("vehicle", root, true)) do
+        for i, vehicle in ipairs(getElementsWithinRange(rootx,rooty,rootz,15,"vehicle")) do
             local opis=getElementData(vehicle,"opis")
             local poziom=tonumber(getElementData(vehicle,"poziom"))
             if poziom then
                 opis= (opis and opis or "") .. " zapełnienie: " ..math.floor(math.max(math.min(poziom,100),0)+0.5).."%"
             end
             if (opis) then
-            local x,y,z=getElementPosition(vehicle)
-            local distance = getDistanceBetweenPoints3D(rootx, rooty, rootz, x, y, z)
-            local kierowca=getVehicleController(vehicle)
-            if (distance<=15 or (kierowca and kierowca==localPlayer)) then
-                local sx,sy = getScreenFromWorldPosition(x,y,z, 200)
+            	local x,y,z=getElementPosition(vehicle)
+            	local kierowca=getVehicleController(vehicle)
+               	local sx,sy = getScreenFromWorldPosition(x,y,z, 200)
                 if (sx and sy) then
                     dxDrawText(opis, sx-(sw/5),sy,sx+(sw/5),sy, tocolor(255,255,255,155), 1.0, "default-small", "center","center",false,true)
                 end
-            end
             end
         end
         
         local ctrl=getKeyState("lalt") or getKeyState("ralt") or getKeyState("lctrl") or getKeyState("rctrl")
 
-        for i, player in ipairs(getElementsByType("player",root,true)) do
+        for i, player in ipairs(getElementsWithinRange(rootx,rooty,rootz,35,"player")) do
             if player ~= localPlayer and (getElementAlpha(player)>50 or ourlevel>1 or getElementDimension(player)==901) then
                 local x,y,z = getPedBonePosition(player,8)
 
                 local sx, sy = getScreenFromWorldPosition(x, y, z+0.5)
                 if sx then
-						local distance = getDistanceBetweenPoints3D(rootx, rooty, rootz, x, y, z)
 						if getElementAlpha(player) < 1 and not getElementData(localPlayer,"player:admin") then
 						return end
 						
 						local name = "["..getElementData(player, "id").."] "..getPlayerName(player)..""
-                        local distance = getDistanceBetweenPoints3D(rootx, rooty, rootz, x, y, z)
 
                         local fX = math.floor(sx)
                         local fY = math.floor(sy)
 
                         local alpha = 120
 
-                        if(distance <= 35) then
                             local org=getElementData(player,"player:organization")
                             if (ctrl) then
                                 local fname=getElementData(player, "player:faction")
@@ -161,44 +150,39 @@ addEventHandler("onClientRender", root, function()
                                     end
                                 end
                             end
-                        end
                 end
             end
         end    
 
-        for i, ped in ipairs(getElementsByType("ped",root,true)) do
+        for i, ped in ipairs(getElementsWithinRange(rootx,rooty,rootz,8,"ped")) do
             local name=getElementData(ped,"name")
             if name then
                 local x,y,z = getElementPosition(ped)
                 local sx, sy = getScreenFromWorldPosition(x, y, z + 1)
 
                 if sx then
-                    local distance = getDistanceBetweenPoints3D(rootx, rooty, rootz, x, y, z)
 
                     local fX = sx
                     local fY = sy
 
                     local alpha = 120
 
-                    if(distance <= 8 and isLineOfSightClear(rootx,rooty,rootz,x,y,z,false,false,false)) then
+                    if isLineOfSightClear(rootx,rooty,rootz,x,y,z,false,false,false) then
                         dxDrawText(name, fX, fY, fX, fY, tocolor(0, 0, 0, alpha), nametagScale, nametagFont, "center", "center")                    
                     end
                 end
             end
         end  
 
-		for i,vehicle in ipairs(getElementsByType("vehicle")) do
+		for i,vehicle in ipairs(getElementsWithinRange(rootx,rooty,rootz,25,"vehicle")) do
 		local x,y,z=getElementPosition(vehicle)
 		local sx,sy=getScreenFromWorldPosition(x,y,z)
 		if sx and sy then
 			local desc=getElementData(vehicle,"vehicle:desc")
 			if desc then
 				local veh = getPedOccupiedVehicle(localPlayer)
-				local distance=getDistanceBetweenPoints3D(rootx,rooty,rootz,x,y,z)
-				if distance <= 25 then
-					if isLineOfSightClear( rootx,rooty,rootz, x,y,z, true, true, false, true, false, true, true,vehicle ) then
+				if isLineOfSightClear( rootx,rooty,rootz, x,y,z, true, true, false, true, false, true, true,vehicle ) then
 					dxDrawText(desc:gsub("#%x%x%x%x%x%x",""), sx-(sw/10),sy,sx+(sw/10),sy, tocolor(255,255,255,alpha), 1.0, "default", "center","center",false,true)
-					end
 				end
 			end
 		end
