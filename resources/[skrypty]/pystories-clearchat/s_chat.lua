@@ -5,16 +5,17 @@
 ]]--
 
 -- Clear Chat @Administracji
-addCommandHandler("cc", function(plr, cmd, ...)
-    --local accName = getAccountName ( getPlayerAccount ( plr ) )
-        if getElementData(plr,"player:admin",true) then
-        local reason = table.concat(arg, " ")
-		local name = getPlayerName(plr):gsub("#%x%x%x%x%x%x","")
-			
-		for i = 1, 1000 do
-  			outputChatBox(" ", root)
-		end
-			
-        outputChatBox("** Chat został wyczyszczony przez "..name:gsub("#%x%x%x%x%x%x","")..", Powód: "..reason:gsub("#%x%x%x%x%x%x","").."", getRootElement(), 255, 0, 0)
+addCommandHandler("cc",
+    function (player, _, ...)
+        if getElementData(player, "player:admin", true) then
+            local reason = table.concat({...}, " ")
+            local name = getPlayerName(player)
+            
+            for i = 1, 1000 do
+                outputChatBox(" ")
+            end
+            
+            outputChatBox("** Chat został wyczyszczony przez ".. name .."#ff0000, Powód: ".. reason, root, 255, 0, 0, true)
+        end
     end
-end)
+)
