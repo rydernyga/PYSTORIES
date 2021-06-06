@@ -52,8 +52,6 @@ function setBlipColor ( source, commandName, r, g, b )
 	end
 end
 
-addCommandHandler ( "setblipscolor", setBlipsColor )
-addCommandHandler ( "setblipcolor", setBlipColor )
 addEventHandler ( "onResourceStart", resourceRoot, onResourceStart )
 addEventHandler ( "onPlayerSpawn", root, onPlayerSpawn )
 addEventHandler ( "onPlayerQuit", root, onPlayerQuit )
